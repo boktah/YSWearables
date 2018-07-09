@@ -5,6 +5,8 @@
 
 int i = 1;
 unsigned long time = 0;
+bool accelAlert, pulseAlert, tempAlert, humAlert;
+accelAlert = false; pulseAlert = false; tempAlert = false; humAlert = false;
 
 // READ PINS
 int axPin = A0; int ayPin = A1; int azPin = A2;
@@ -13,6 +15,7 @@ int pulsePin = A3;
 // READ VALS
 int pulseVal; int pulseThreshold = 550; int bpmLimit = 90;
 int ax, ay, az; int motionLimit = 500; int avg; int marks = 0; int marksLimit = 6;
+float temperature; float humidity; int tempLimit = 39; int humLimit = 70;
 
 // WRITE PINS
 int vibePin = 6;
@@ -89,12 +92,19 @@ void pulse() {
 }
 
 void temp() {
+  temperature = tempSensor.readTemperature();
+  humidity = tempSensor.readHumidity();
+  
+  if (temperature > tempLimit || humidity > humLimit) {
+    startExcercise();
+  }
+  
   if (i == 1) {
     // control the outputs of the temperature sensor to only print once per 1000 ms
     Serial.print("Humidity:    ");
-    Serial.print(tempSensor.readHumidity(), 2);
+    Serial.print(humidity, 2);
     Serial.print("\tTemperature: ");
-    Serial.println(tempSensor.readTemperature(), 2);
+    Serial.println(temperature, 2);
   }
   i++; if (i == 50) {i = 1;}
 }
