@@ -19,6 +19,7 @@ Currently the device can:
 - read accelerometer individual raw values in x, y, and z directions
 - read BPM from pulse sensor and create real-time graph within Arduino serial plotter
 - read temperature and humidity
+- activate a breathing exercise when BPM goes too high (using vibe board and LED)
 
 Note: none of these functionalities have been tested yet.
 
@@ -32,7 +33,7 @@ Note: none of these functionalities have been tested yet.
   - if too many marks are gathered within 30 seconds, activate the vibe board
 - [ ] make sure pulse sensor doesn't interrupt other readings
 - [ ] ensure accuracy of humidity sensor, decide how to use readings to measure sweat
-- [ ] create breathing exercise with LED
+- [x] create breathing exercise with LED
   - blue, cyan, and green
   - blue = breath in
   - cyan = transition color
