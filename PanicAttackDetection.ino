@@ -63,7 +63,12 @@ void pulse() {
   }
 
   pulseVal = pulseSensor.getBeatsPerMinute();
-  (pulseVal > bpmLimit) ? controlVibe(true) : controlVibe(false);
+  Serial.print("BPM: "); Serial.println(pulseVal);
+  if (pulseVal > bpmLimit) {
+    for (int n = 1; n < 6; n++) {
+      breathExerciseCycle();
+    }
+  }
 }
 
 void temp() {
@@ -76,4 +81,30 @@ void temp() {
 
 void controlVibe(bool val) {
   val ? digitalWrite(vibePin, HIGH) : digitalWrite(vibePin, LOW);
+}
+
+void breathExerciseCycle() { // one cycle is 10 seconds
+  digitalWrite(red, HIGH);
+  digitalWrite(green, HIGH);
+  digitalWrite(blue, LOW);
+  delay(4000);
+
+  controlVibe(true);
+  digitalWrite(red, HIGH);
+  digitalWrite(green, LOW);
+  digitalWrite(blue, LOW);
+  delay(1000);
+  controlVibe(false);
+
+  digitalWrite(red, HIGH);
+  digitalWrite(green, LOW);
+  digitalWrite(blue, HIGH);
+  delay(4000);
+
+  controlVibe(true);
+  digitalWrite(red, HIGH);
+  digitalWrite(green, LOW);
+  digitalWrite(blue, LOW);
+  delay(1000);
+  controlVibe(false);
 }
