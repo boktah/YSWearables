@@ -23,10 +23,19 @@ Currently the device can:
 Note: none of these functionalities have been tested yet.
 
 ### ToDo
-- test all sensor functionality
-- send all info to phone app via bluetooth (ongoing)
-- create algorithm to determine excessive motion from accelerometer
-- make sure pulse sensor doesn't interrupt other readings
-- ensure accuracy of humidity sensor, decide how to use readings to measure sweat
-- create breathing exercise with LED
-- make vibe board vibrate when BPM is too high and/or motion is erratic
+- [ ] test all sensor functionality
+- [ ] send all info to phone app via bluetooth (ongoing)
+- [ ] create algorithm to determine excessive motion from accelerometer
+  - divide each value by a certain number (higher number for less weight)
+  - add all values
+  - every time total goes above threshold, add mark
+  - if too many marks are gathered within 30 seconds, activate the vibe board
+- [ ] make sure pulse sensor doesn't interrupt other readings
+- [ ] ensure accuracy of humidity sensor, decide how to use readings to measure sweat
+- [ ] create breathing exercise with LED
+  - blue, cyan, and green
+  - blue = breath in
+  - cyan = transition color
+  - green = breath out
+- [x] make vibe board vibrate when BPM is too high
+- [ ] and when motion is erratic
