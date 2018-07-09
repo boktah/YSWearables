@@ -65,6 +65,10 @@ void pulse() {
   pulseVal = pulseSensor.getBeatsPerMinute();
   Serial.print("BPM: "); Serial.println(pulseVal);
   if (pulseVal > bpmLimit) {
+    controlVibe(true);
+    delay(3000);
+    controlVibe(false);
+    
     for (int n = 1; n < 6; n++) {
       breathExerciseCycle();
     }
