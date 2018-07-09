@@ -20,13 +20,14 @@ Currently the device can:
 - read BPM from pulse sensor and create real-time graph within Arduino serial plotter
 - read temperature and humidity
 - activate a breathing exercise when BPM goes too high (using vibe board and LED)
+- activate a breathing exercise when motion is excessive
 
 Note: none of these functionalities have been tested yet.
 
 ### ToDo
 - [ ] test all sensor functionality
 - [ ] send all info to phone app via bluetooth (ongoing)
-- [ ] create algorithm to determine excessive motion from accelerometer
+- [x] create algorithm to determine excessive motion from accelerometer
   - divide each value by a certain number (higher number for less weight)
   - add all values
   - every time total goes above threshold, add mark
@@ -39,4 +40,4 @@ Note: none of these functionalities have been tested yet.
   - cyan = transition color
   - green = breath out
 - [x] make vibe board vibrate when BPM is too high
-- [ ] and when motion is erratic
+- [x] and when motion is erratic
