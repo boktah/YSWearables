@@ -3,12 +3,14 @@
 #include <PulseSensorPlayground.h>
 #include <Adafruit_Si7021.h>
 
+int i = 1;
+
 // READ PINS
 int axPin = A0; int ayPin = A1; int azPin = A2;
 int pulsePin = A3;
 
 // READ VALS
-int pulseVal; int pulseThreshold = 550;
+int pulseVal; int pulseThreshold = 550; int bpmLimit = 90;
 int ax, ay, az;
 
 // WRITE PINS
@@ -20,7 +22,6 @@ PulseSensorPlayground pulseSensor;
 
 void setup() {
   Serial.begin(115200);
-  int i = 1;
 
   pinMode(pulsePin, INPUT);
   pinMode(axPin,    INPUT);
@@ -62,6 +63,7 @@ void pulse() {
   }
 
   pulseVal = pulseSensor.getBeatsPerMinute();
+  (pulseVal > bpmLimit) ? controlVibe(true) : controlVibe(false);
 }
 
 void temp() {
@@ -72,3 +74,6 @@ void temp() {
   i++; if (i == 50) {i = 1;}
 }
 
+void controlVibe(bool val) {
+  val ? digitalWrite(vibePin, HIGH) : digitalWrite(vibePin, LOW);
+}
