@@ -3,30 +3,31 @@
 #include <PulseSensorPlayground.h>
 #include <Adafruit_Si7021.h>
 
-int i = 1;
-unsigned long time = 0;
+int i = 1; // used to control temp sensor print outputs
+unsigned long time = 0; // used to reset marks on accel
+// may be used to toggle on/off the alert for a particular sensor
 bool accelAlert, pulseAlert, tempAlert, humAlert;
 accelAlert = false; pulseAlert = false; tempAlert = false; humAlert = false;
 
 // READ PINS
-int axPin = A0; int ayPin = A1; int azPin = A2;
-int pulsePin = A3;
+int axPin = A0; int ayPin = A1; int azPin = A2; // accel
+int pulsePin = A3; // pulse
 
 // READ VALS
-int pulseVal; int pulseThreshold = 550; int bpmLimit = 90;
-int ax, ay, az; int motionLimit = 500; int avg; int marks = 0; int marksLimit = 6;
-float temperature; float humidity; int tempLimit = 39; int humLimit = 70;
+int pulseVal; int pulseThreshold = 550; int bpmLimit = 90; // pulse
+int ax, ay, az; int motionLimit = 500; int avg; int marks = 0; int marksLimit = 6; // accel
+float temperature; float humidity; int tempLimit = 39; int humLimit = 70; // temp+hum
 
 // WRITE PINS
-int vibePin = 6;
-int red = 10; int green = 8; int blue = 9;
+int vibePin = 6; // vibe board
+int red = 10; int green = 8; int blue = 9; // rgb led
 
 Adafruit_Si7021 tempSensor = Adafruit_Si7021();
 PulseSensorPlayground pulseSensor;
 
 void setup() {
   Serial.begin(115200);
-
+  // configure pinmodes for each pin used
   pinMode(pulsePin, INPUT);
   pinMode(axPin,    INPUT);
   pinMode(ayPin,    INPUT);
@@ -50,20 +51,20 @@ void accel() {
   ay = analogRead(ayPin);
   az = analogRead(azPin);
 
-  avg = (ax/3) + (ay/3) + (az/3);
+  avg = (ax/3) + (ay/3) + (az/3); // might weigh certain axes differently in future
 
-  if (avg > motionLimit) {
+  if (avg > motionLimit) { // every time motion is too much, it adds a mark
     marks++;
-    if (marks == 1) {
+    if (marks == 1) { // on the first mark, it starts a timer
       time = millis();
     }
   }
 
-  if ((millis() - time) > 30000 && marks > 0) {
+  if ((millis() - time) > 30000 && marks > 0) { // if 30 seconds pass, reset marks to 0
     marks = 0;
   }
 
-  if (marks > marksLimit) {
+  if (marks > marksLimit) { // if marks reaches the limit, start breathing exercise
     startExercise();
   }
   
@@ -86,7 +87,7 @@ void pulse() {
 
   pulseVal = pulseSensor.getBeatsPerMinute();
   Serial.print("BPM: "); Serial.println(pulseVal);
-  if (pulseVal > bpmLimit) {
+  if (pulseVal > bpmLimit) { // if BPM is too high, start exercise
     startExercise();
   }
 }
@@ -96,7 +97,7 @@ void temp() {
   humidity = tempSensor.readHumidity();
   
   if (temperature > tempLimit || humidity > humLimit) {
-    startExcercise();
+    startExcercise(); // if temp or humidity is too high, start exercise
   }
   
   if (i == 1) {
@@ -109,16 +110,16 @@ void temp() {
   i++; if (i == 50) {i = 1;}
 }
 
-void controlVibe(bool val) {
+void controlVibe(bool val) { // turn vibe board on/off
   val ? digitalWrite(vibePin, HIGH) : digitalWrite(vibePin, LOW);
 }
 
-void startExercise() {
+void startExercise() { // gives a 3 second vibration before looping the exercise for 60 seconds
   controlVibe(true);
   delay(3000);
   controlVibe(false);
   
-  for (int n = 1; n < 6; n++) {
+  for (int n = 0; n < 6; n++) { // n<6 means the cycle will run 6 times
     breathExerciseCycle();
   }
 }
