@@ -21,6 +21,7 @@ Currently the device can:
 - read temperature and humidity
 - activate a breathing exercise when BPM goes too high (using vibe board and LED)
 - activate a breathing exercise when motion is excessive
+- activate a breathing exercise when temperature or humidity is excessive
 
 Note: none of these functionalities have been tested yet.
 
