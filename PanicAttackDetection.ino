@@ -125,25 +125,25 @@ void startExercise() { // gives a 3 second vibration before looping the exercise
 }
 
 void breathExerciseCycle() { // one cycle is 10 seconds
-  digitalWrite(red, HIGH);
+  digitalWrite(red, HIGH); // blue
   digitalWrite(green, HIGH);
   digitalWrite(blue, LOW);
   delay(4000);
 
   controlVibe(true);
-  digitalWrite(red, HIGH);
+  digitalWrite(red, HIGH); // cyan
   digitalWrite(green, LOW);
   digitalWrite(blue, LOW);
   delay(1000);
   controlVibe(false);
 
-  digitalWrite(red, HIGH);
+  digitalWrite(red, HIGH); // green
   digitalWrite(green, LOW);
   digitalWrite(blue, HIGH);
   delay(4000);
 
   controlVibe(true);
-  digitalWrite(red, HIGH);
+  digitalWrite(red, HIGH); // cyan
   digitalWrite(green, LOW);
   digitalWrite(blue, LOW);
   delay(1000);
