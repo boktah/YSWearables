@@ -42,3 +42,4 @@ Note: none of these functionalities have been tested yet.
   - green = breath out
 - [x] make vibe board vibrate when BPM is too high
 - [x] and when motion is erratic
+- [ ] determine the communication rate of the BT module and set the proper baud rate for the serial
